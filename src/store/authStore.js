@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import axios from "axios";
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:3000"; // ← Optional: Set base URL
+import api from "../tools/axiosTools";
 
 const useAuthStore = create(
   persist(
@@ -21,7 +18,7 @@ const useAuthStore = create(
       login: async (identifier, password) => {
         set({ loading: true, error: null });
         try {
-          const response = await axios.post("/api/auth/login", {
+          const response = await api.post("/auth/login", {
             identifier,
             password,
           });
@@ -56,7 +53,7 @@ const useAuthStore = create(
       register: async (username, email, password) => {
         set({ loading: true, error: null });
         try {
-          await axios.post("/api/auth/register", {
+          await api.post("/auth/register", {
             email,
             username,
             password,
@@ -86,7 +83,7 @@ const useAuthStore = create(
         }
 
         try {
-          const res = await axios.get("/api/auth/me");
+          const res = await api.get("/auth/me");
 
           set({
             user: res.data.user,
@@ -107,7 +104,7 @@ const useAuthStore = create(
       logout: async () => {
         set({ loading: true, error: null });
         try {
-          await axios.post("/api/auth/logout");
+          await api.post("/auth/logout");
 
           set({
             user: null,

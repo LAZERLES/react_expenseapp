@@ -1,5 +1,5 @@
-import axios from "axios";
 import { create } from "zustand";
+import api from "../tools/axiosTools";
 
 const useCategoryStore = create((set) => ({
     categories: [],
@@ -7,7 +7,7 @@ const useCategoryStore = create((set) => ({
 
     getCategories: async () => {
         try {
-            const res = await axios.get('http://localhost:3000/api/categories/');
+            const res = await api.get('/categories/');
     
             set({ categories: res.data.categories });
 
