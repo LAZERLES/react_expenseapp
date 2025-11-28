@@ -1,5 +1,6 @@
 import axios from "axios";
 import { create } from "zustand";
+import api from "../tools/axiosTools";
 
 const useTransactionStore = create((set, get) => ({
   // State
@@ -13,7 +14,7 @@ const useTransactionStore = create((set, get) => ({
   getTransactions: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.get("http://localhost:3000/api/transactions");
+      const res = await api.get("/transactions");
 
       set({
         transactions: res.data.transactions,
@@ -31,8 +32,8 @@ const useTransactionStore = create((set, get) => ({
 
   getBalance: async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:3000/api/transactions/balance"
+      const res = await api.get(
+        "/transactions/balance"
       );
 
       set({ balance: res.data.balance });
@@ -44,8 +45,8 @@ const useTransactionStore = create((set, get) => ({
   createTransaction: async (transactionData) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/transactions",
+      const res = await api.post(
+        "/transactions",
         transactionData
       );
 
@@ -67,8 +68,8 @@ const useTransactionStore = create((set, get) => ({
   updateTransaction: async (id, transactionData) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.put(
-        `http://localhost:3000/api/transactions/${id}`,
+      const res = await api.put(
+        `/transactions/${id}`,
         transactionData
       );
 
@@ -91,7 +92,7 @@ const useTransactionStore = create((set, get) => ({
 
   deleteTransaction: async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/transactions/${id}`);
+      await api.delete(`/transactions/${id}`);
 
       set((state) => ({
         transactions: state.transactions.filter(
@@ -107,7 +108,7 @@ const useTransactionStore = create((set, get) => ({
 
   getSummary: async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/transactions/summary");
+      const res = await api.get("/transactions/summary");
 
       set({ summary: res.data });
 
