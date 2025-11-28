@@ -1,7 +1,7 @@
 import "./App.css";
 import LoginPage from "./components/LoginPage";
 import Transaction from "./components/Transaction";
-import {  Route, Routes } from "react-router-dom";
+import {  Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import ToastProvider from "./tools/noticToast.jsx";
 import PublicLayout from "./layout/PublicLayout";
